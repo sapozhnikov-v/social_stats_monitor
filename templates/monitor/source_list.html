@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %} Все источники {% endblock title %}
+
+{% block content %}
+
+    <div align="right"><a class="button-link" href="http://127.0.0.1:8000/monitor/sources/create/">Добавить источник</a></div>
+    <h3> Все источники </h3>
+    <table>
+        <tr>
+            <th>Аватар</th>
+            <th>Название</th>
+            <th>Подписчики</th>
+            <th>Ссылка</th>
+            <th>Социальная сеть</th>
+        </tr>
+    {% for source in sources %}
+        <tr>
+            <td><img src="{{ source.avatar }}" width="50" height="50"  alt=""/></td>
+            <td> <a href="{%  url 'detail' source.id %}">{{ source.name }}</a></td>
+            <td> {{ source.stat_set.last.count_subscribers }}</td>
+            <td> <a href="{{ source.link }}">{{ source.link }}</a></td>
+            <td> {{ source.type_social }}</td>
+        </tr>
+    {% endfor %}
+     </table>
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{% endblock content %}

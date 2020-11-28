@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ source.name }} {% endblock title %}
+
+{% block content %}
+
+    <h1> {{ source.name }} </h1>
+    <table>
+        <tr>
+            <th>Аватар</th>
+            <th>Название</th>
+            <th>Подписчики</th>
+            <th>Ссылка</th>
+            <th>Социальная сеть</th>
+
+        </tr>
+        <tr>
+            <td><img src="{{ source.avatar }}" width="50" height="50"  alt=""/></td>
+            <td> {{ source.name }}</td>
+            <td> {{ source.stat_set.last.count_subscribers }}</td>
+            <td> {{ source.link }}</td>
+            <td> {{ source.type_social }}</td>
+
+        </tr>
+     </table>
+    <h2>История изменения количества подписчиков</h2>
+    <table>
+        <tr>
+            <th>Количество подписчиков</th>
+            <th>Дата обновления</th>
+        </tr>
+    {% for stat in source.ordered_stats %}
+        <tr>
+            <td>{{ stat.count_subscribers }}</td>
+            <td>{{ stat.updated_at }}</td>
+        </tr>
+    {% endfor %}
+     </table>
+
+{% endblock content %}
